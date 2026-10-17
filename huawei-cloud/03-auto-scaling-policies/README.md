@@ -4,8 +4,8 @@
 
 **Platform:** Huawei Cloud
 **Source:** Huawei Cloud HCCDP-Solution Architectures program
-**Date completed:** [Month Year]
-**Region:** [e.g., AP-Singapore]
+**Date completed:** 17-Oct-2026
+**Region:**  AP-Singapore
 
 ## Objective
 - Understand the basic process of using Auto Scaling
@@ -16,24 +16,22 @@
 - Auto Scaling (AS): configuration, group, scaling policies
 - Elastic Cloud Server (ECS): instances launched by the AS group
 - Elastic Load Balance (ELB)
-- [Cloud Eye (alarms), if used: confirm]
-- [Bandwidth service, if used: confirm]
+- Cloud Eye (alarms)
+- Bandwidth service, 
 
 ## Architecture
 ![Architecture diagram](architecture/diagram.png)
-
-[One or two lines: how the AS group, ECS instances and load balancer connect.]
 
 ## What I did
 
 ### 1. Basic process of using AS
 - Created an **AS configuration** (the template for new instances): [image, flavor/instance type, disk, security group]
-- Created an **AS group** with min [X] / max [Y] instances in [VPC/subnet]
+- Created an **AS group** with instances in [VPC/subnet]
 
 ### 2. Scaling policies
-- **Alarm-based policy:** scales based on [metric, e.g., CPU usage] with a threshold of [value] for [duration]. Action: [add / remove N instances]
-- **Scheduled or periodic policy:** triggers [once at a set time / on a recurring schedule, e.g., daily at HH:MM]. Action: [change capacity]
-- **Periodic bandwidth scaling policy:** adjusts [bandwidth] on a schedule [details]
+- **Alarm-based policy:** scales based on [metric, e.g., CPU usage] with a threshold. Action: [add / remove N instances]
+- **Scheduled or periodic policy:** triggers [once at a set time / on a recurring schedule, e.g., daily. Action: [change capacity]
+- **Periodic bandwidth scaling policy:** adjusts [bandwidth] on a schedule.
 
 ### 3. Stability test
 - Created a **load balancer** and associated it with the AS group
