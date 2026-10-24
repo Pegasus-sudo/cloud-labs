@@ -20,12 +20,17 @@
 - NAT Gateway
 - [Elastic Cloud Server (ECS), if used for testing]
 
+## Architecture
+![Architecture diagram](architecture/diagram.png)
+
+[One or two lines: VPC names and CIDR blocks, which subnets, how they connect.]
+
 ## Lab sections
 
 ### 1. Basic configuration
-Created VPC(s) and subnet(s):
-- VPC A: 
-- VPC B: 
+Created [number] VPC(s) and subnet(s):
+- VPC A: [CIDR], subnet [CIDR]
+- VPC B: [CIDR], subnet [CIDR]
 
 ### 2. Security configuration
 - Configured **security group** rules: [e.g., allowed SSH/ICMP from specific sources]
