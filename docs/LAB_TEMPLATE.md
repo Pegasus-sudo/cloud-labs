@@ -1,40 +1,67 @@
-# Lab Title
+# [Lab title]
 
-> One-line summary of what this lab shows.
+> One or two sentences describing the task performed and the practical outcome.
 
-**Platform:** AWS / Huawei Cloud
-**Source:** [AWS Academy / course name / self-designed]
-**Date completed:** [Month Year]
-**Region:** [e.g., us-east-1]
+**Platform:** AWS / Huawei Cloud  
+**Exercise type:** Guided training lab / self-directed lab  
+**Completion:** Completed / In progress  
+**Date:** [Month YYYY, if known]  
+**Region:** [Region, if relevant and safe to disclose]
 
-## Objective
-What problem does this lab solve, or what skill does it practice?
+## 1. Objective
 
-## Services used
-- Service 1
-- Service 2
+Describe the task and the technical capability being practiced.
 
-## Architecture
-![Architecture diagram](architecture/diagram.png)
+## 2. Services and components
 
-Short explanation of how the pieces connect.
+- [Cloud service]
+- [Supporting service or client]
+- [Relevant protocol or tool]
 
-## Steps
-1. Step one, with the key setting you chose.
-2. Step two.
-3. Step three.
+## 3. Architecture
 
-## Verification
-How did you confirm it worked? (logs, instance state, browser test, console output)
+Use a Mermaid diagram that reflects the actual lab configuration. Do not include components that were not deployed or tested.
 
-![Result](screenshots/result.png)
+```mermaid
+flowchart LR
+    A[Client or user] --> B[Cloud service]
+    B --> C[Target resource]
+```
 
-## Key learnings
-- Learning 1
-- Learning 2
+Explain the important traffic, data, or control paths below the diagram.
 
-## Cost and cleanup
-Resources deleted after the lab: yes / no. Notes on cost.
+## 4. Implementation
 
-## Possible improvements
-- Idea 1
+Document the main configuration steps. Include important settings only when they are known and verified.
+
+1. [Configuration step]
+2. [Configuration step]
+3. [Configuration step]
+
+## 5. Verification and results
+
+Explain how the configuration was tested and what was observed.
+
+- **Test:** [What was tested]
+- **Expected behavior:** [Expected result]
+- **Observed result:** [Actual result]
+
+Add screenshots or sanitized command output when available. Use descriptive filenames, for example `screenshots/rds-instance-overview.png`.
+
+## 6. Security and operational considerations
+
+Record relevant access-control, network-exposure, backup, monitoring, availability, and cost considerations. Clearly distinguish settings actually configured from recommendations for future improvement.
+
+## 7. Key takeaways
+
+- [Practical learning]
+- [Operational insight]
+- [Security consideration]
+
+## 8. Cleanup and cost
+
+State whether resources were deleted or are still present. Mention any services that may continue to incur charges.
+
+## 9. Possible improvements
+
+- [A realistic next step]
