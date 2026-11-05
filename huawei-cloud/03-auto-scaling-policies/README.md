@@ -1,57 +1,136 @@
-# Auto Scaling on Huawei Cloud: Configurations, Scaling Policies and Stability Test
+# Huawei Cloud Auto Scaling Policies
 
-> Hands-on lab on Huawei Cloud Auto Scaling (AS): creating an AS configuration and group, configuring alarm-based, scheduled/periodic and bandwidth scaling policies, and testing stability behind a load balancer.
+> Hands-on Huawei Cloud lab reviewing alarm-based scale-out and scale-in policies, Auto Scaling group capacity, and instance-count settings.
 
-**Platform:** Huawei Cloud
-**Source:** Huawei Cloud HCCDP-Solution Architectures program
-**Date completed:** 17-Oct-2026
-**Region:**  AP-Singapore
+**Platform:** Huawei Cloud  
+**Training:** HCCDP Solution Architecture  
+**Region visible in console evidence:** AP-Singapore  
+**Date recorded in the existing lab notes:** 17 October 2026  
+**Status:** Policy configurations and capacity snapshots documented from supplied screenshots
 
-## Objective
-- Understand the basic process of using Auto Scaling
-- Configure different types of scaling policies
-- Verify that an AS group behaves correctly behind a load balancer
+## 1. Objective
 
-## Services used
-- Auto Scaling (AS): configuration, group, scaling policies
-- Elastic Cloud Server (ECS): instances launched by the AS group
-- Elastic Load Balance (ELB)
-- Cloud Eye (alarms)
-- Bandwidth service, 
+The exercise develops practical familiarity with Huawei Cloud Auto Scaling (AS), including how scaling policies respond to monitored conditions and how an Auto Scaling group maintains its configured capacity range.
 
-## Architecture
-![Architecture diagram](architecture/diagram.png)
+The supplied screenshots specifically show two alarm-based policies and two Auto Scaling group capacity snapshots.
 
-## What I did
+## 2. Services and concepts
 
-### 1. Basic process of using AS
-- Created an **AS configuration** (the template for new instances): [image, flavor/instance type, disk, security group]
-- Created an **AS group** with instances in [VPC/subnet]
+- **Auto Scaling (AS):** manages the number of ECS instances in an Auto Scaling group.
+- **Elastic Cloud Server (ECS):** compute instances managed by the group.
+- **Alarm-based scaling policy:** performs a scaling action when a monitoring condition is met.
+- **Cooldown period:** time interval configured between scaling actions.
+- **Minimum and maximum capacity:** lower and upper limits configured for the group.
 
-### 2. Scaling policies
-- **Alarm-based policy:** scales based on [metric, e.g., CPU usage] with a threshold. Action: [add / remove N instances]
-- **Scheduled or periodic policy:** triggers [once at a set time / on a recurring schedule, e.g., daily. Action: [change capacity]
-- **Periodic bandwidth scaling policy:** adjusts [bandwidth] on a schedule.
+The original lab notes also mention AS configurations, scheduled or periodic policies, bandwidth scaling, Cloud Eye, and Elastic Load Balance (ELB). Those topics are not demonstrated in the screenshots reviewed for this update, so they are not described as verified implementation results below.
 
-### 3. Stability test
-- Created a **load balancer** and associated it with the AS group
-- Checked AS stability: [what you observed, e.g., new instances registered automatically with the load balancer and traffic was served without interruption]
+## 3. Alarm-based scaling policies
 
-## Verification
-![AS group](screenshots/as-group.png)
-![Scaling policies](screenshots/scaling-policies.png)
-![Load balancer association](screenshots/elb-association.png)
+The Auto Scaling policy console shows separate scale-out and scale-in policies.
 
-## Key learnings
-- An AS configuration is a reusable template; the AS group controls how many instances run.
-- Different policy types fit different patterns: alarm-based for unpredictable load, scheduled/periodic for predictable load.
-- Associating a load balancer with the AS group lets new instances receive traffic automatically.
-- This builds on my [scalable web architecture lab](../02-scalable-web-architecture/) with a deeper look at scaling policies.
+### 3.1 Scale-out policy
 
-## Cost and cleanup
-Resources released after the lab: [yes / no].
+| Setting | Value visible in console |
+|---|---|
+| Policy type | Alarm |
+| Monitoring resource | AS Groups (specific resource) |
+| Metric | CPU Usage Max. |
+| Trigger condition | Greater than 80% |
+| Evaluation condition | 1 consecutive period |
+| Monitoring interval | 5 minutes |
+| Scaling action | Add 1 instance |
+| Cooldown period | 300 seconds |
 
-## Possible improvements
-- Combine alarm-based and scheduled policies for peak hours
-- Tune cooldown periods to avoid rapid scaling in and out
-- Add health checks and notifications
+The console description states that the alarm is triggered only once even if the trigger conditions persist.
+
+### 3.2 Scale-in policy
+
+| Setting | Value visible in console |
+|---|---|
+| Policy type | Alarm |
+| Monitoring resource | AS Groups (specific resource) |
+| Metric | CPU Usage Max. |
+| Trigger condition | Less than 40% |
+| Evaluation condition | 1 consecutive period |
+| Monitoring interval | 5 minutes |
+| Scaling action | Reduce 1 instance |
+| Cooldown period | 300 seconds |
+
+The console description also states that the alarm is triggered only once even if the trigger conditions persist.
+
+> The metric name, thresholds, evaluation period, monitoring interval, actions, and cooldown are transcribed from the visible policy rows. The screenshots do not show the full metric definition or a time-series graph.
+
+## 4. Auto Scaling group capacity
+
+Two separate console snapshots show the following capacity values:
+
+| Snapshot | Expected instances | Current instances | Minimum | Maximum |
+|---|---:|---:|---:|---:|
+| A | 2 | 2 | 1 | 3 |
+| B | 1 | 1 | 1 | 3 |
+
+Both snapshots show zero protected and zero standby instances. The visible last-action panel shows zero removed and zero waiting instances.
+
+These are two observed console states. The screenshots do not include activity history or timestamps sufficient to establish that one state changed into the other because of the alarm policies. Therefore, the change from two instances to one is not presented as a verified automatic scale-in event.
+
+## 5. Logical scaling behavior
+
+The following diagram explains the intent of the two configured policies. It represents policy logic, not a captured event timeline.
+
+```mermaid
+flowchart TD
+    M["Monitor maximum CPU usage"]
+    M --> H{"CPU usage > 80%?"}
+    H -->|"Yes, for 1 consecutive 5-minute period"| OUT["Scale out: add 1 instance"]
+    H -->|"No"| L{"CPU usage < 40%?"}
+    L -->|"Yes, for 1 consecutive 5-minute period"| IN["Scale in: remove 1 instance"]
+    L -->|"No"| HOLD["No scaling action from these conditions"]
+    OUT --> CD["300-second cooldown"]
+    IN --> CD
+```
+
+The Auto Scaling group capacity range visible in the screenshots is minimum 1 and maximum 3 instances. Actual policy execution remains subject to the group's configured capacity limits.
+
+## 6. Verification summary
+
+| Area | Evidence visible | Supported conclusion |
+|---|---|---|
+| Scale-out policy | CPU Usage Max. > 80%; 1 consecutive period; 5-minute monitoring interval; add 1; cooldown 300 seconds | Scale-out policy configuration is visible |
+| Scale-in policy | CPU Usage Max. < 40%; 1 consecutive period; 5-minute monitoring interval; reduce 1; cooldown 300 seconds | Scale-in policy configuration is visible |
+| Group capacity | Expected/current counts of 2/2 and 1/1 | Two capacity snapshots are visible |
+| Capacity boundaries | Minimum 1, maximum 3 | Group capacity range is visible |
+| Scaling activity | No activity-history record or event timeline supplied | Policy-triggered scale-out/scale-in is not independently verified |
+| ELB integration | No ELB association or health-check screenshot in this batch | Load-balancer integration is not verified by this evidence |
+
+## 7. Security and operational considerations
+
+- Set minimum and maximum instance counts to values that balance availability and cost.
+- Use scale-out and scale-in thresholds with enough separation to reduce unnecessary repeated changes.
+- Review metric definitions, units, evaluation periods, and cooldown behavior before relying on a policy.
+- Confirm that new instances receive the correct image, software configuration, security groups, and subnet placement.
+- If using a load balancer, verify backend health checks and confirm that new instances become healthy before relying on them to serve traffic.
+- Monitor scaling activity and instance health rather than treating a configured policy as proof that scaling has occurred.
+
+These are operational recommendations, not claims that each item was configured or tested in this lab.
+
+## 8. Key takeaways
+
+- Reviewed alarm-based scaling in both directions: adding and removing ECS instances.
+- Compared a high-CPU scale-out threshold with a low-CPU scale-in threshold.
+- Observed a 300-second cooldown configured for both policies.
+- Reviewed an Auto Scaling group with a minimum of one and maximum of three instances.
+- Distinguished policy configuration and capacity snapshots from confirmed policy-triggered scaling events.
+
+## 9. Evidence gaps and possible improvements
+
+The supplied collage does not show:
+
+- Auto Scaling activity history proving that either alarm policy executed.
+- A CPU monitoring graph showing the threshold being crossed.
+- The full AS configuration or instance template.
+- Scheduled/periodic or bandwidth scaling policy details.
+- ELB association, backend health checks, or traffic distribution.
+
+For a stronger portfolio record, add sanitized screenshots of the alarm metric graph, scaling activity history, AS configuration, and (if included in the exercise) ELB backend association and health status. Avoid publishing account identifiers, session tokens, credentials, or sensitive IP information.
+
+The screenshots were supplied as a collage in chat and have not been committed as separate image files in this repository.
