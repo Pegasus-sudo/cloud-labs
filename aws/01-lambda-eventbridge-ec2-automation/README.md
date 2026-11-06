@@ -22,7 +22,7 @@ Automate a simple EC2 lifecycle action without maintaining a continuously runnin
 ## Services and components
 
 - **AWS Lambda** — runs the Python automation.
-- **Amazon EventBridge Scheduler / scheduled rule** — invokes the function on a schedule. The original console evidence shows a rule named `everyMinute`.
+- **Amazon EventBridge** — invokes the function on a schedule. The original console evidence shows a rule named `everyMinute`.
 - **Amazon EC2** — the target compute instance.
 - **AWS IAM** — grants the Lambda execution role the required EC2 permissions.
 - **Amazon CloudWatch Logs** — receives the function's standard application logs when the Lambda execution role has the basic logging permissions.
@@ -38,7 +38,7 @@ flowchart LR
     L -->|Application logs| CW["Amazon CloudWatch Logs"]
 ```
 
-The function uses the `EC2_INSTANCE_IDS` environment variable to identify the target instance. The IAM policy should restrict `ec2:StopInstances` to that instance ARN. The `ec2:DescribeInstances` action requires a wildcard resource in this policy.
+The function reads the target from the `EC2_INSTANCE_ID` environment variable. The IAM policy restricts `ec2:StopInstances` to the ARN of that instance. The `ec2:DescribeInstances` action requires a wildcard resource in this policy.
 
 ## Implementation
 
@@ -46,16 +46,16 @@ The function uses the `EC2_INSTANCE_IDS` environment variable to identify the ta
 2. Created a Lambda execution role and attached the EC2 permissions in [`iam-policy.json`](iam-policy.json).
 3. Added the standard `AWSLambdaBasicExecutionRole` managed policy to allow the function to write logs to CloudWatch Logs.
 4. Configured the Lambda function using the code in [`lambda_function.py`](lambda_function.py).
-5. Set the Lambda environment variable `EC2_INSTANCE_IDS` to a comma-separated list of the intended instance IDs.
+5. Set the Lambda environment variable `EC2_INSTANCE_ID` to the intended instance ID.
 6. Added an EventBridge schedule and configured the Lambda function as its target.
 
 ### Required configuration
 
-Set the function environment variable:
+Set this function environment variable:
 
 | Variable | Required | Example |
 |---|---:|---|
-| `EC2_INSTANCE_IDS` | Yes | `i-0123456789abcdef0` |
+| `EC2_INSTANCE_ID` | Yes | `i-0123456789abcdef0` |
 
 The Lambda runtime provides `AWS_REGION`; deploy the function in the same region as the target EC2 instance. Do not commit real instance IDs, account IDs, credentials, or other account-specific values to a public repository.
 
@@ -72,11 +72,11 @@ The screenshots support the configuration and observed instance state. They do n
 
 ## Security considerations
 
-- Keep the target instance IDs in Lambda environment configuration rather than hard-coding them in source.
-- Scope `ec2:StopInstances` to the intended EC2 instance ARN. The policy contains a clearly marked ARN placeholder that must be replaced before use.
+- Keep the target instance ID in Lambda environment configuration rather than hard-coding it in source.
+- Scope `ec2:StopInstances` to the intended EC2 instance ARN. The policy contains clearly marked account and instance ID placeholders that must be replaced before use.
 - `ec2:DescribeInstances` uses `Resource: "*"` because this action does not support resource-level restriction in the same way as `StopInstances`.
-- Attach `AWSLambdaBasicExecutionRole` for standard CloudWatch logging; do not add broad log permissions to the EC2 policy.
-- Avoid exposing AWS account identifiers, usernames, instance IDs, or console details in screenshots published to a public repository. Replace evidence images with redacted copies where necessary.
+- Attach `AWSLambdaBasicExecutionRole` for standard CloudWatch logging; this is kept separate from the EC2 permissions policy.
+- The original code screenshot exposes a resource identifier and an AWS console account/user label. Replace it with a redacted copy before treating the screenshot set as publication-ready.
 
 ## Cost and cleanup
 
