@@ -78,6 +78,20 @@ flowchart TB
     ECS --- Apache
 ```
 
+## 5.1 Committed screenshot evidence
+
+| Screenshot | Evidence captured |
+|---|---|
+| [Security-group inventory](Screenshots/01-security-group-inventory.jpg) | Security groups and associated-instance counts |
+| [ECS network topology](Screenshots/02-ecs-network-topology.jpg) | ECS `ecs-mp`, security group, network interface, EIP, system disk, and image |
+| [Web-stack package installation](Screenshots/03-web-stack-package-install.png) | Package installation output for Apache, MariaDB, PHP, and PHP-FPM |
+| [Apache configuration](Screenshots/04-apache-configuration.png) | Apache configuration editor with `ServerName localhost:80` |
+| [Apache service running](Screenshots/05-apache-service-running.png) | `httpd` service shown as active (running) |
+| [DAS database list](Screenshots/06-das-database-list.png) | DAS page for RDS instance `rds-mp`, MySQL 8.0.43, with a database row |
+| [WordPress database setup](Screenshots/07-wordpress-database-setup-page.png) | WordPress setup page requesting database connection details; not proof of a successful DB connection |
+| [WordPress admin dashboard](Screenshots/08-wordpress-admin-dashboard.png) | WordPress dashboard reachable over HTTP |
+| [Auto Scaling policy](Screenshots/09-auto-scaling-policy.png) | Alarm policy row with CPU Usage Raw Data ≥ 600%, add 5 instances, 300-second cooldown |
+
 ## 6. Verification summary
 
 | Area | Screenshot evidence | Supported conclusion |
