@@ -91,6 +91,19 @@ flowchart TD
 
 The Auto Scaling group capacity range visible in the screenshots is minimum 1 and maximum 3 instances. Actual policy execution remains subject to the group's configured capacity limits.
 
+## 5.1 Committed screenshot evidence
+
+| Screenshot | Evidence captured |
+|---|---|
+| [AS group capacity and add action](Screenshots/01-as-group-capacity-and-add-action.jpg) | Expected/current capacity 2/2; last action reports adding two instances and Successful |
+| [Scale-out alarm policy](Screenshots/02-scale-out-alarm-policy.jpg) | CPU Usage Max. greater than 80% for one 5-minute period; add one instance; 300-second cooldown |
+| [CPU stress script error](Screenshots/03-cpu-stress-script-error.png) | Attempted script execution fails with a shell syntax error; load generation is not verified |
+| [Monitoring metrics](Screenshots/04-monitoring-metrics.jpg) | Monitoring graphs with a visible CPU peak and request/traffic metrics |
+| [Manual scale-in action](Screenshots/05-manual-scale-in-action.jpg) | Last action explicitly marked Triggered by Manual; remove one instance; Successful |
+| [Scale-in alarm policy](Screenshots/06-scale-in-alarm-policy.jpg) | CPU Usage Max. below 40% for one 5-minute period; reduce one instance; 300-second cooldown |
+| [CPU and instance-count metrics](Screenshots/07-cpu-and-instance-count-metrics.jpg) | CPU and instance-count time series shown together; does not alone establish causality |
+| [Successful alarm-triggered scale-in](Screenshots/08-successful-alarm-scale-in.jpg) | Last action marked Triggered by Alarm for `as-policy-service02`; remove one instance; Successful |
+
 ## 6. Verification summary
 
 | Area | Evidence visible | Supported conclusion |
