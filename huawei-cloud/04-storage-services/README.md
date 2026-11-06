@@ -5,7 +5,7 @@
 **Platform:** Huawei Cloud  
 **Training:** HCCDP Solution Architecture  
 **Region visible in console evidence:** AP-Singapore  
-**Status:** Evidence reviewed from supplied screenshot collage
+**Status:** EVS and OBS evidence linked; SFS evidence remains incomplete
 
 ## 1. Objectives
 
@@ -28,7 +28,7 @@ The exercise outline includes attaching and initializing EVS disks on Windows an
 
 ### 3.1 Linux disk preparation
 
-The supplied terminal collage shows Linux block-device and partition work. The visible commands/output include:
+The committed terminal screenshots show Linux block-device and partition work. The visible commands/output include:
 
 - Formatting the partition `/dev/vdb1` with the ext4 filesystem.
 - A separate terminal view showing a Linux partition table entry with partition type `83 Linux`.
@@ -37,7 +37,7 @@ The supplied terminal collage shows Linux block-device and partition work. The v
 
 The terminal then attempts to change into `/mnt/sdc/snapshot`, but the shell reports that this path does not exist. A subsequent `cat test.file` command is visible, but the screenshot does not show file contents.
 
-These captures support documenting Linux filesystem formatting and a mount command. They do not show the Huawei Cloud EVS volume detail page, the complete disk-to-ECS attachment workflow, or a Windows disk initialization and detach/verification sequence.
+These captures support documenting Linux filesystem formatting, a successful mount, and a read test. A Windows Disk Management screenshot shows a 20 GB NTFS `D:` volume displayed as Healthy (Primary Partition). The EVS inventory also shows volumes in In-use and Detaching states, but does not establish the complete attachment/detachment lifecycle.
 
 ### 3.2 EVS evidence summary
 
@@ -47,7 +47,7 @@ These captures support documenting Linux filesystem formatting and a mount comma
 | Partition information | Linux partition table output with type 83 Linux | A Linux partition is shown |
 | Mount operation | `mount /dev/vdc1 /mnt/sdc` followed by mounted-filesystem output | The shown partition was mounted at the specified path |
 | Snapshot directory | `cd /mnt/sdc/snapshot` returns “No such file or directory” | The attempted path was not present at that location |
-| Windows EVS workflow | No Windows disk-management screenshot supplied | Windows initialization/detach steps are not verified by this evidence |
+| Windows disk view | Disk Management shows a 20 GB NTFS `D:` volume as Healthy (Primary Partition) | A Windows data volume is visible; the initial disk setup steps are not shown |
 
 ## 4. OBS — Object Storage Service
 
@@ -66,22 +66,11 @@ The screenshot shows the Task Center operation for `obs-test` in `bucket-vivi` a
 
 ## 5. SFS — Scalable File Service
 
-The SFS console screenshot shows a file-system row with these visible details:
-
-| Field | Value |
-|---|---|
-| Status | Creating... |
-| Availability zone | AZ1 |
-| Protocol | NFS |
-| Used capacity | Displayed as 0/... (full value cropped) |
-
-The status is visibly **Creating...**, which indicates that the file system was still being provisioned in the captured view. No SFS file-system status or successful SFS mount is visible in the currently committed individual screenshots. Do not claim SFS provisioning or mounting as verified from this evidence set.
-
-The official exercise outline includes creating an SFS Turbo file system and mounting it to Linux and Windows ECS instances. Those steps remain part of the exercise scope, but successful mounting is not established by this collage.
+The training outline includes creating an SFS Turbo file system and mounting it to Linux and Windows ECS instances. However, none of the 12 committed screenshots shows an SFS file-system resource, a provisioning status, or a client mount. SFS therefore remains an objective in the exercise scope, not a verified result in the current evidence set.
 
 ## 6. Logical storage overview
 
-The diagram below is a conceptual summary of the three storage types and the evidence visible in the collage. It does not assert that all three services were fully integrated or that the SFS mount was completed.
+The diagram below is a conceptual summary of the three storage types. It does not assert that all three services were fully integrated or that SFS provisioning or mounting was completed.
 
 ```mermaid
 flowchart TB
@@ -90,8 +79,8 @@ flowchart TB
     LINUX["Linux filesystem and mount operations shown"]
     OBS["OBS bucket: bucket-vivi"]
     OBJECT["Object record: obs-test (0 Bytes)"]
-    SFS["SFS file system (NFS)"]
-    STATUS["Console status: Creating..."]
+    SFS["SFS Turbo (not evidenced in current screenshot set)"]
+    STATUS["No SFS resource screenshot committed"]
 
     ECS --> EVS
     EVS --> LINUX
@@ -122,7 +111,7 @@ flowchart TB
 |---|---|---|
 | EVS | Linux ext4 formatting and a mount command | Full cloud attachment workflow, Windows initialization, detach verification, and snapshot test |
 | OBS | One zero-byte object record in a named bucket | Complete bucket creation, non-empty upload/download, and deletion workflow |
-| SFS | NFS file-system row in AZ1 with status Creating... | Ready/available status, Linux or Windows mount, and cross-client shared-file test |
+| SFS | No SFS resource screenshot is committed in this evidence set | Provisioning state, Linux or Windows mount, and cross-client shared-file test are unverified |
 
 ## 8. Key takeaways
 
