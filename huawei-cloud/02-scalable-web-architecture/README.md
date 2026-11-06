@@ -112,7 +112,7 @@ These are recommendations for a robust deployment; they are not claims that each
 
 ## 9. Evidence gaps and possible improvements
 
-The supplied collage does not show the full architecture diagram, ELB listener and backend configuration, RDS database settings, WordPress database connectivity, or an actual Auto Scaling event.
+The committed screenshots do not show the full architecture diagram, ELB listener/backend configuration, RDS instance settings, a successful WordPress-to-database connection, or an actual Auto Scaling event.
 
 To make the portfolio record more complete, add sanitized screenshots showing:
 
@@ -122,4 +122,4 @@ To make the portfolio record more complete, add sanitized screenshots showing:
 - Auto Scaling group capacity settings and a scale-out activity record showing the instance count before and after the event.
 - Monitoring graph or alarm details that show the metric, unit, and evaluation periods.
 
-The collages reviewed in chat have not been added as individual image files to this repository. Remove credentials, session tokens, account identifiers, and sensitive IP details before publishing original screenshots.
+The original screenshots are stored individually in `Screenshots/`. Several captures contain a RemoteShell session token in the browser URL, a public IP address, or console identity details. Treat these files as unredacted training evidence and replace them with sanitized copies before public release.
