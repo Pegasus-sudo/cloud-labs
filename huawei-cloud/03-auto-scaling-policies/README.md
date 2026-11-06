@@ -71,7 +71,7 @@ Two separate console snapshots show the following capacity values:
 
 Both snapshots show zero protected and zero standby instances. The visible last-action panel shows zero removed and zero waiting instances.
 
-These are two observed console states. The screenshots do not include activity history or timestamps sufficient to establish that one state changed into the other because of the alarm policies. Therefore, the change from two instances to one is not presented as a verified automatic scale-in event.
+These are two observed console states. Additional screenshots now show a successful action explicitly labelled `Triggered by Alarm. Remove 1 instance` for policy `as-policy-service02`. This supports that an alarm-triggered scale-in action was reported as successful. Another screenshot shows a separate manual removal action; these two events must not be conflated. A separate scale-out snapshot reports `Triggered by Expected instances. Add 2...`, which is not proof of an alarm-triggered scale-out.
 
 ## 5. Logical scaling behavior
 
@@ -99,7 +99,9 @@ The Auto Scaling group capacity range visible in the screenshots is minimum 1 an
 | Scale-in policy | CPU Usage Max. < 40%; 1 consecutive period; 5-minute monitoring interval; reduce 1; cooldown 300 seconds | Scale-in policy configuration is visible |
 | Group capacity | Expected/current counts of 2/2 and 1/1 | Two capacity snapshots are visible |
 | Capacity boundaries | Minimum 1, maximum 3 | Group capacity range is visible |
-| Scaling activity | No activity-history record or event timeline supplied | Policy-triggered scale-out/scale-in is not independently verified |
+| Scaling activity | Last-action panel reports `Triggered by Alarm. Remove 1 instance` for `as-policy-service02`, status Successful | One alarm-triggered scale-in action is evidenced; the exact metric sample that caused it is not shown |
+| Manual scaling | Separate last-action panel reports `Triggered by Manual. Remove 1 instance`, status Successful | Manual removal is evidenced separately from alarm-based scaling |
+| Scale-out action | Last-action panel reports `Triggered by Expected instances. Add 2...`, status Successful | Capacity adjustment is shown, but the capture does not attribute it to the CPU alarm policy |
 | ELB integration | No ELB association or health-check screenshot in this batch | Load-balancer integration is not verified by this evidence |
 
 ## 7. Security and operational considerations
@@ -123,7 +125,7 @@ These are operational recommendations, not claims that each item was configured 
 
 ## 9. Evidence gaps and possible improvements
 
-The supplied collage does not show:
+The committed screenshots do not show:
 
 - Auto Scaling activity history proving that either alarm policy executed.
 - A CPU monitoring graph showing the threshold being crossed.
@@ -133,4 +135,4 @@ The supplied collage does not show:
 
 For a stronger portfolio record, add sanitized screenshots of the alarm metric graph, scaling activity history, AS configuration, and (if included in the exercise) ELB backend association and health status. Avoid publishing account identifiers, session tokens, credentials, or sensitive IP information.
 
-The screenshots were supplied as a collage in chat and have not been committed as separate image files in this repository.
+The screenshots are now committed individually under `Screenshots/`. One CPU-stress script capture shows a shell syntax error, so that attempt must not be described as a successful load-generation test.
