@@ -35,7 +35,7 @@ The committed terminal screenshots show Linux block-device and partition work. T
 - Creating a mount directory and issuing `mount /dev/vdc1 /mnt/sdc`.
 - The mount command reports that the filesystem was mounted.
 
-The terminal then attempts to change into `/mnt/sdc/snapshot`, but the shell reports that this path does not exist. A subsequent `cat test.file` command is visible, but the screenshot does not show file contents.
+A separate terminal capture shows `mount /dev/vdc1 /mnt/sdc`; a later `cd /mnt/sdc/snapshot` attempt reports that the path does not exist. The shell then reads `test.file` from its current directory and displays `snapshot test`. This proves the file-read command worked, but does not establish that the file was read from the mounted volume.
 
 These captures support documenting Linux filesystem formatting, a successful mount, and a read test. A Windows Disk Management screenshot shows a 20 GB NTFS `D:` volume displayed as Healthy (Primary Partition). The EVS inventory also shows volumes in In-use and Detaching states, but does not establish the complete attachment/detachment lifecycle.
 
@@ -45,7 +45,7 @@ These captures support documenting Linux filesystem formatting, a successful mou
 |---|---|---|
 | Filesystem creation | `mkfs -t ext4 /dev/vdb1` and filesystem output are visible | ext4 formatting was performed on the shown partition |
 | Partition information | Linux partition table output with type 83 Linux | A Linux partition is shown |
-| Mount operation | `mount /dev/vdc1 /mnt/sdc` followed by mounted-filesystem output | The shown partition was mounted at the specified path |
+| Mount operation | `mount /dev/vdb1 /mnt/sdc` followed by `df -TH` output | The shown ext4 partition was mounted at the specified path |
 | Snapshot directory | `cd /mnt/sdc/snapshot` returns “No such file or directory” | The attempted path was not present at that location |
 | Windows disk view | Disk Management shows a 20 GB NTFS `D:` volume as Healthy (Primary Partition) | A Windows data volume is visible; the initial disk setup steps are not shown |
 
