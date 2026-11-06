@@ -1,54 +1,74 @@
 # Secure Network Design on AWS: VPC, Subnets, Security Groups and EC2
 
-> An isolated VPC with controlled traffic, plus an EC2 web server configured with security and operational protections.
+This lab explores the building blocks of an isolated AWS network and basic EC2 operational safeguards. The committed console evidence shows a custom VPC, a public/private subnet design preview, regional VPC resources, and the resulting VPC details.
 
-**Platform:** AWS
-**Source:** [AWS Academy / course name]
-**Date completed:** [Month Year]
-**Region:** [e.g., us-east-1]
+## Lab details
 
-## Objective
-Apply cloud security fundamentals: reduce attack surface through network isolation, control traffic with security groups, and protect and monitor an EC2 instance.
+| Item | Value |
+|---|---|
+| Platform | Amazon Web Services |
+| Region shown in console | `us-east-1` (US East – N. Virginia) |
+| VPC name | `lab-vpc` |
+| VPC CIDR shown | `10.0.0.0/16` |
+| VPC state shown | Available |
+| DNS hostnames / resolution | Enabled |
+| Course source / completion date | Not recorded in available evidence |
 
-## Services used
-- Amazon VPC (subnets)
-- Security Groups
-- Amazon EC2
-- Amazon CloudWatch (instance monitoring, confirm tool used)
+## Objectives
+
+- Create a custom VPC with public and private subnet separation.
+- Understand how route tables, Internet Gateways, NAT Gateways, security groups, and network ACLs fit into VPC networking.
+- Launch and operate EC2 instances while using service-level protections.
 
 ## Architecture
-![Architecture diagram](architecture/diagram.png)
 
-VPC [CIDR, e.g., 10.0.0.0/16] with [number] subnets. The EC2 instance sits inside the controlled boundary and only accepts the traffic allowed by its security group.
+The VPC creation preview shows two subnets in `us-east-1a`, labelled `lab-subnet-public1-us-east-1a` and `lab-subnet-private1-us-east-1a`, with separate public and private route tables.
 
-## Part A: Secure VPC environment
-1. Created isolated subnets to reduce attack surface [subnet names and CIDRs].
-2. Applied security group rules to control traffic flow and block unauthorized access.
-3. Launched an EC2 instance inside the VPC and validated connectivity within the boundary.
+```mermaid
+flowchart TB
+  subgraph VPC["lab-vpc · 10.0.0.0/16"]
+    subgraph AZ["Availability Zone: us-east-1a"]
+      PUB["Public subnet"]
+      PRIV["Private subnet"]
+    end
+    RTB["Public route table"]
+    RTP["Private route table"]
+    PUB --- RTB
+    PRIV --- RTP
+  end
+  IGW["Internet Gateway"] --- RTB
+  NAT["NAT Gateway (planned in creation preview)"] -. "not shown as provisioned" .- RTP
+```
 
-## Part B: EC2 web server operations and protection
-1. Launched an EC2 instance with **termination protection** to prevent accidental deletion.
-2. Configured a security group rule to allow **HTTP (port 80)** securely.
-3. Monitored instance performance and health.
-4. Resized the instance (changed instance type) to support scalability, then enabled **stop protection**.
-5. Reviewed EC2 service limits and validated the protections with controlled stop tests.
+The NAT Gateway is shown as a selected option in the VPC creation preview, but the regional VPC dashboard screenshot reports zero NAT Gateways. Therefore, this repository does not claim that a NAT Gateway was successfully provisioned or that private-subnet outbound routing was tested.
 
-## Verification
-- Web server reachable over HTTP only through the allowed rule.
-- Stop/terminate attempts blocked while protection was enabled.
+## Work performed
 
-![Security group rules](screenshots/security-group.png)
-![Termination protection](screenshots/termination-protection.png)
+1. Configured a custom VPC named `lab-vpc` with IPv4 CIDR `10.0.0.0/16`.
+2. Used the VPC creation workflow to define public and private subnets in `us-east-1a`.
+3. Reviewed the VPC dashboard and resource inventory, including subnets, route tables, Internet Gateways, and network ACLs.
+4. Reviewed the custom VPC details and confirmed the console showed its state as `Available`, with DNS hostnames and DNS resolution enabled.
+5. The broader lab objectives also covered EC2 web-server operations, HTTP security-group rules, termination protection, stop protection, and instance resizing. The current three-image evidence set does not independently verify each of those actions.
 
-## Key learnings
-- How subnet isolation and security groups limit exposure.
-- Operational safeguards (termination and stop protection) that prevent accidental outages.
-- How VLAN and segmentation concepts from on-premises networks map to VPC design.
+## Evidence
+
+| Screenshot | What it demonstrates |
+|---|---|
+| [VPC creation preview](Screenshots/01-vpc-creation-preview.jpeg) | Two-subnet public/private design preview, route tables, and NAT Gateway selection during configuration. |
+| [VPC regional dashboard](Screenshots/02-vpc-regional-resource-dashboard.jpeg) | Regional resource counts, including VPCs, subnets, route tables, Internet Gateways, network ACLs, and zero NAT Gateways at capture time. |
+| [Custom VPC details](Screenshots/03-lab-vpc-details.jpeg) | `lab-vpc` is Available with CIDR `10.0.0.0/16` and DNS features enabled. |
+
+## Security and operational notes
+
+- A subnet being named public or private does not alone enforce its exposure; route-table associations and security-group/network-ACL rules determine actual traffic paths.
+- Apply least-privilege inbound rules and restrict administrative access to trusted source addresses.
+- A NAT Gateway has hourly and data-processing charges. Do not leave one running when it is not required.
+- The screenshots include AWS account/user context and resource identifiers. Redact account-specific details before reusing evidence outside this repository.
 
 ## Cost and cleanup
-Resources deleted after the lab: [yes / no].
 
-## Possible improvements
-- Add public and private subnets with an Internet Gateway and NAT Gateway.
-- Add network ACLs as a second layer.
-- Put the instance behind a load balancer.
+The screenshots do not prove whether every resource was deleted after the exercise. Before ending a lab, inspect the VPC, EC2, NAT Gateway, Elastic IP, load balancer, and storage inventories. Delete resources that are no longer required and verify that billable resources have reached their deleted or terminated state.
+
+## Evidence limitations
+
+The current evidence confirms the VPC configuration and dashboard inventory. It does not include a readable security-group rule set, route-table entries, a successful NAT Gateway state, EC2 web-server response, or stop/termination-protection test result. Those items should only be added as verified claims if supporting evidence is captured.
