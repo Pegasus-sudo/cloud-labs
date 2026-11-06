@@ -73,7 +73,7 @@ flowchart TB
 
 ### 5.1 VPC and subnet configuration
 
-The subnet console capture shows two subnet rows associated with **vpc-01**. The IPv4 CIDR values are truncated in the collage, so the exact subnet ranges are not listed.
+The subnet console capture shows two subnet rows associated with **vpc-01**. The IPv4 CIDR values are truncated, so the exact subnet ranges are not listed. The screenshot also exposes a VPC identifier; this should be redacted in a public-safe copy.
 
 ### 5.2 Security groups and Network ACLs
 
@@ -89,7 +89,7 @@ The Huawei Cloud RemoteShell capture shows a terminal on **ecs-vpcbasic-01** run
 ssh 192.168.0.112
 ```
 
-The terminal proceeds through host-key confirmation and password authentication, then displays a last-login message and the Huawei Cloud service welcome message. This is evidence that the SSH session to the private address was established.
+The terminal proceeds through host-key confirmation and password authentication, then displays a last-login message and the Huawei Cloud service welcome message. This is evidence that an SSH session to `192.168.0.112` was established. A separate capture shows six successful ping replies from `192.168.1.5` with 0% packet loss; the screenshot does not prove that this address belongs to the peered VPC.
 
 The screenshot does not identify the destination ECS name or show the complete security-group and Network ACL rules governing the connection.
 
@@ -115,6 +115,7 @@ The public IP field is partially visible in the collage and is intentionally omi
 |---|---|---|
 | VPC and subnets | Two subnet rows associated with vpc-01 | Subnet entries are present; exact CIDRs are cropped |
 | ECS connectivity | SSH session to 192.168.0.112 reaches the remote login banner | SSH login succeeded |
+| ICMP connectivity | Six ping replies from 192.168.1.5; 0% packet loss | ICMP connectivity to that address succeeded from the shown ECS session |
 | VPC peering | Two custom route entries use peering-test as next hop | Peering connection is referenced by custom routes |
 | Public NAT Gateway | nat-test shows Normal; CIDR 192.168.0.0/24 | Gateway is present and displayed as Normal |
 | Security groups | Covered in official exercise instructions | Specific rules and test results are not visible in supplied collage |
@@ -142,7 +143,7 @@ These are security and operational recommendations, not claims that every contro
 
 ## 9. Evidence and possible improvements
 
-The screenshots reviewed were supplied as collages in chat and have not been added as individual image files to this repository.
+The original screenshots are now stored individually in `Screenshots/` and linked below. The files still require a publication-safety review because some captures expose console usernames, public IP information, or account context.
 
 To make this lab record more complete, add sanitized original screenshots showing:
 
