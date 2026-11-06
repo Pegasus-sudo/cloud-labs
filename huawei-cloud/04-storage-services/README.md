@@ -62,7 +62,7 @@ The OBS Task Center screenshot shows one record with the following visible detai
 
 This confirms that the Task Center displays an object record named `obs-test` in bucket `bucket-vivi`, with a size of zero bytes.
 
-The collage does not show the bucket creation page or separate upload, download, and delete confirmations. Therefore, the object record is documented as visible evidence, but the full OBS lifecycle workflow is not claimed as verified.
+The screenshot shows the Task Center operation for `obs-test` in `bucket-vivi` as Succeeded, with a size of 0 Bytes. It does not demonstrate a non-empty object upload/download or object-content integrity. Therefore, the object record is documented as visible evidence, but the full OBS lifecycle workflow is not claimed as verified.
 
 ## 5. SFS — Scalable File Service
 
@@ -75,7 +75,7 @@ The SFS console screenshot shows a file-system row with these visible details:
 | Protocol | NFS |
 | Used capacity | Displayed as 0/... (full value cropped) |
 
-The status is visibly **Creating...**, which indicates that the file system was still being provisioned in the captured view. The screenshot does not show a completed status, mount command, successful client mount, or shared-file access test.
+The status is visibly **Creating...**, which indicates that the file system was still being provisioned in the captured view. No SFS file-system status or successful SFS mount is visible in the currently committed individual screenshots. Do not claim SFS provisioning or mounting as verified from this evidence set.
 
 The official exercise outline includes creating an SFS Turbo file system and mounting it to Linux and Windows ECS instances. Those steps remain part of the exercise scope, but successful mounting is not established by this collage.
 
@@ -136,4 +136,4 @@ To complete the portfolio record, add sanitized evidence showing:
 - Windows NFS client installation and successful mount, if completed.
 - A shared-file test demonstrating access from both clients.
 
-The supplied collage was reviewed in chat and has not been committed as a separate image file in this repository. Remove credentials, session tokens, account identifiers, and sensitive IP details before publishing original screenshots.
+The original storage screenshots are now stored individually in `Screenshots/`. They include console and terminal details that should be checked for public disclosure before the repository is treated as publication-ready. Remove credentials, session tokens, account identifiers, and sensitive IP details before publishing original screenshots.
