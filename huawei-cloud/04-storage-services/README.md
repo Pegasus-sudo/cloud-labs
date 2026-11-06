@@ -4,142 +4,113 @@
 
 **Platform:** Huawei Cloud  
 **Training:** HCCDP Solution Architecture  
-**Region visible in console evidence:** AP-Singapore  
-**Status:** EVS and OBS evidence linked; SFS evidence remains incomplete
+**Region shown in original console captures:** AP-Singapore  
+**Evidence status:** EVS Linux/Windows evidence retained; OBS evidence withheld pending redaction; SFS remains unverified.
 
 ## 1. Objectives
 
-The official exercise covers three Huawei Cloud storage services:
+The training exercise covers three Huawei Cloud storage services:
 
-1. **EVS (Elastic Volume Service):** block storage practice.
-2. **OBS (Object Storage Service):** object storage practice.
-3. **SFS (Scalable File Service):** shared file storage practice.
+1. **EVS (Elastic Volume Service):** block storage attached to ECS instances.
+2. **OBS (Object Storage Service):** object storage organized into buckets and objects.
+3. **SFS Turbo (Scalable File Service):** managed shared file storage accessed by supported clients.
 
-The exercise outline includes attaching and initializing EVS disks on Windows and Linux ECS instances, creating and managing OBS buckets and objects, and creating and mounting an SFS Turbo file system to Linux and Windows ECS instances.
+The exercise outline includes preparing EVS disks on Windows and Linux, managing OBS buckets and objects, and provisioning/mounting SFS Turbo. This README distinguishes the exercise objectives from the activities demonstrated by the available evidence.
 
-## 2. Services and concepts
+## 2. EVS — Elastic Volume Service
 
-- **EVS:** persistent block storage volumes attached to ECS instances.
-- **OBS:** object storage organized into buckets and objects.
-- **SFS Turbo:** managed shared file storage; the supplied console row identifies the NFS protocol.
-- **ECS:** compute instances used to access storage services.
+EVS provides persistent block volumes that can be attached to ECS instances and prepared by the guest operating system.
 
-## 3. EVS — Elastic Volume Service
+### Linux disk preparation
 
-### 3.1 Linux disk preparation
+The retained terminal captures show the following sequence on a Linux ECS:
 
-The committed terminal screenshots show Linux block-device and partition work. The visible commands/output include:
+1. `fdisk -l` identifies an additional 21.5 GB block device at `/dev/vdb`.
+2. A primary Linux partition, `/dev/vdb1`, is created with an approximate size of 10 GiB.
+3. `mkfs -t ext4 /dev/vdb1` creates an ext4 filesystem.
+4. The mount point `/mnt/sdc` is created.
+5. `/dev/vdb1` is mounted at `/mnt/sdc`, and `df -TH` lists the ext4 filesystem at that mount point.
 
-- Formatting the partition `/dev/vdb1` with the ext4 filesystem.
-- A separate terminal view showing a Linux partition table entry with partition type `83 Linux`.
-- Creating a mount directory and issuing `mount /dev/vdc1 /mnt/sdc`.
-- The mount command reports that the filesystem was mounted.
+The terminal capture also shows an earlier mount attempt with an incorrectly combined device/path argument. The subsequent corrected command succeeds. The successful mount is the relevant result.
 
-A separate terminal capture shows `mount /dev/vdc1 /mnt/sdc`; a later `cd /mnt/sdc/snapshot` attempt reports that the path does not exist. The shell then reads `test.file` from its current directory and displays `snapshot test`. This proves the file-read command worked, but does not establish that the file was read from the mounted volume.
+A separate terminal capture shows a different device, `/dev/vdc1`, being mounted at `/mnt/sdc`. The later attempt to change into `/mnt/sdc/snapshot` fails because that path does not exist. The command `cat test.file` then reads a file from the shell's current directory. This is **not** evidence that the file was read from the mounted filesystem.
 
-These captures support documenting Linux filesystem formatting, a successful mount, and a read test. A Windows Disk Management screenshot shows a 20 GB NTFS `D:` volume displayed as Healthy (Primary Partition). The EVS inventory also shows volumes in In-use and Detaching states, but does not establish the complete attachment/detachment lifecycle.
+### Windows disk view
 
-### 3.2 EVS evidence summary
+The Windows Disk Management capture shows:
 
-| Activity | Evidence | Supported conclusion |
+- Disk 1 online with a capacity of 20 GB.
+- A 20 GB NTFS volume assigned drive letter `D:`.
+- The volume status displayed as Healthy (Primary Partition).
+
+The screenshot shows the resulting disk/volume state; it does not show the complete initialization and formatting sequence.
+
+### EVS evidence
+
+| Evidence | What it supports | Limitation |
 |---|---|---|
-| Filesystem creation | `mkfs -t ext4 /dev/vdb1` and filesystem output are visible | ext4 formatting was performed on the shown partition |
-| Partition information | Linux partition table output with type 83 Linux | A Linux partition is shown |
-| Mount operation | `mount /dev/vdb1 /mnt/sdc` followed by `df -TH` output | The shown ext4 partition was mounted at the specified path |
-| Snapshot directory | `cd /mnt/sdc/snapshot` returns “No such file or directory” | The attempted path was not present at that location |
-| Windows disk view | Disk Management shows a 20 GB NTFS `D:` volume as Healthy (Primary Partition) | A Windows data volume is visible; the initial disk setup steps are not shown |
+| [Windows Disk Management](Screenshots/01-windows-disk-management.png) | A 20 GB NTFS `D:` volume is online and healthy | Initial disk setup steps are not shown |
+| [Linux disk partition table](Screenshots/04-linux-disk-partition-table.png) | An additional `/dev/vdb` disk is visible | Does not alone prove cloud attachment details |
+| [Linux partition creation](Screenshots/05-linux-partition-creation.png) | A Linux partition `/dev/vdb1` is created | Partitioning only |
+| [Linux ext4 formatting](Screenshots/06-linux-ext4-formatting.png) | `/dev/vdb1` is formatted as ext4 | Does not prove persistence after reboot |
+| [Linux filesystem mount](Screenshots/07-linux-filesystem-mount.png) | `/dev/vdb1` is mounted at `/mnt/sdc`; `df -TH` lists it | No reboot/persistent-mount test is shown |
+| [Linux file-read attempt](Screenshots/08-linux-file-read-test.png) | A separate mount command for `/dev/vdc1` succeeds; a file is read from the current directory | The file read is not demonstrated from the mounted path |
 
-## 4. OBS — Object Storage Service
+## 3. OBS — Object Storage Service
 
-The OBS Task Center screenshot shows one record with the following visible details:
+The original Task Center capture displayed a successful task for an object named `obs-test` in a bucket named `bucket-vivi`, with a reported size of **0 Bytes**.
 
-| Field | Value |
-|---|---|
-| Object name | `obs-test` |
-| Bucket | `bucket-vivi` |
-| Size | `0 Bytes` |
-| Total records | 1 |
+This is limited evidence of a successful task record for a zero-byte object. It does not establish a non-empty upload/download, content integrity, or the complete bucket lifecycle. The original console screenshot is withheld from this branch until account and resource details are redacted.
 
-This confirms that the Task Center displays an object record named `obs-test` in bucket `bucket-vivi`, with a size of zero bytes.
+Recommended follow-up evidence:
+- Bucket details with account identifiers removed.
+- Upload and download of a non-empty test file.
+- Matching file size or checksum after download.
+- Object deletion confirmation, if performed.
 
-The screenshot shows the Task Center operation for `obs-test` in `bucket-vivi` as Succeeded, with a size of 0 Bytes. It does not demonstrate a non-empty object upload/download or object-content integrity. Therefore, the object record is documented as visible evidence, but the full OBS lifecycle workflow is not claimed as verified.
+## 4. SFS Turbo — shared file storage
 
-## 5. SFS — Scalable File Service
+The exercise outline includes creating an SFS Turbo file system and mounting it to Linux and Windows ECS instances. The available screenshot set does not contain an SFS resource, provisioning status, or client mount. SFS is therefore recorded as **not verified**; no completion claim is made.
 
-The training outline includes creating an SFS Turbo file system and mounting it to Linux and Windows ECS instances. However, none of the 12 committed screenshots shows an SFS file-system resource, a provisioning status, or a client mount. SFS therefore remains an objective in the exercise scope, not a verified result in the current evidence set.
+To verify this part of the exercise, capture:
+- SFS Turbo resource details and an Available/usable status.
+- Linux NFS client setup and mount verification.
+- Windows client setup and mount verification, if included in the lab.
+- A shared-file test showing access from the intended clients.
 
-## 6. Logical storage overview
+## 5. Conceptual storage overview
 
-The diagram below is a conceptual summary of the three storage types. It does not assert that all three services were fully integrated or that SFS provisioning or mounting was completed.
+The diagram below summarizes the service roles; it is conceptual and does not claim that all three services were deployed or integrated in this exercise.
 
 ```mermaid
 flowchart TB
     ECS["Elastic Cloud Server (ECS)"]
     EVS["EVS block volume"]
-    LINUX["Linux filesystem and mount operations shown"]
-    OBS["OBS bucket: bucket-vivi"]
-    OBJECT["Object record: obs-test (0 Bytes)"]
-    SFS["SFS Turbo (not evidenced in current screenshot set)"]
-    STATUS["No SFS resource screenshot committed"]
-
-    ECS --> EVS
-    EVS --> LINUX
-    OBS --> OBJECT
-    SFS --> STATUS
+    FS["Guest OS filesystem and mount"]
+    OBS["OBS bucket and objects"]
+    SFS["SFS Turbo shared file system"]
+    ECS --> EVS --> FS
+    ECS -. "object API access" .-> OBS
+    ECS -. "shared file access" .-> SFS
 ```
 
-## 6.1 Committed screenshot evidence
+## 6. Verification summary
 
-| Screenshot | Evidence captured |
-|---|---|
-| [Windows Disk Management](Screenshots/01-windows-disk-management.png) | Disk 1 shown Online with a 20 GB NTFS `D:` volume, Healthy (Primary Partition) |
-| [EVS volume inventory](Screenshots/02-evs-volume-inventory.jpg) | EVS volumes including an In-use volume and one shown Detaching |
-| [ECS instance inventory](Screenshots/03-ecs-instance-inventory.jpg) | Three ECS rows displayed as Running |
-| [Linux disk partition table](Screenshots/04-linux-disk-partition-table.png) | `fdisk -l` output showing additional disk `/dev/vdb` |
-| [Linux partition creation](Screenshots/05-linux-partition-creation.png) | Partition `/dev/vdb1` created with Linux type |
-| [Linux ext4 formatting](Screenshots/06-linux-ext4-formatting.png) | `mkfs -t ext4 /dev/vdb1` output |
-| [Linux filesystem mount](Screenshots/07-linux-filesystem-mount.png) | `/dev/vdb1` mounted at `/mnt/sdc`; `df -TH` lists the ext4 filesystem |
-| [Linux file read test](Screenshots/08-linux-file-read-test.png) | A file named `test.file` is read and displays `snapshot test` |
-| [OBS task result](Screenshots/09-obs-task-success-zero-byte-object.jpg) | OBS task succeeded for `obs-test`, but object size is 0 Bytes |
-| [EIP bound to ECS](Screenshots/10-eip-bound-to-ecs.jpg) | Console confirms EIP `119.8.174.201` bound to an ECS successfully |
-| [DNS tools installation](Screenshots/11-linux-dns-tools-install.png) | `bind-utils` package installation completes successfully |
-| [Mount command help](Screenshots/12-linux-mount-command-help.png) | Mount utility help output; not a successful mount test |
-
-## 7. Verification summary
-
-| Service | What is visible | What is not established |
+| Service | Demonstrated by available evidence | Not established |
 |---|---|---|
-| EVS | Linux ext4 formatting and a mount command | Full cloud attachment workflow, Windows initialization, detach verification, and snapshot test |
-| OBS | One zero-byte object record in a named bucket | Complete bucket creation, non-empty upload/download, and deletion workflow |
-| SFS | No SFS resource screenshot is committed in this evidence set | Provisioning state, Linux or Windows mount, and cross-client shared-file test are unverified |
+| EVS | Windows NTFS volume view; Linux partitioning, ext4 formatting, and mount | Full cloud attachment lifecycle, reboot persistence, snapshot/restore, and verified file I/O on the mounted path |
+| OBS | A successful Task Center record for a zero-byte object (original image withheld pending redaction) | Non-empty upload/download, checksum validation, and full bucket lifecycle |
+| SFS Turbo | Included in the training objectives only | Provisioning, Linux/Windows mounts, and cross-client shared-file access |
 
-## 8. Key takeaways
+## 7. Key takeaways
 
-- EVS provides block storage that is prepared with a filesystem and mounted by an operating system.
-- OBS stores data as objects within buckets.
-- SFS provides shared file storage; the supplied console identifies NFS as its protocol.
-- Storage verification should include both the cloud resource state and the operating-system or application-level access test.
+- EVS provides block devices that the guest operating system partitions, formats, and mounts.
+- OBS stores data as objects inside buckets and should be tested with non-empty files and integrity checks.
+- SFS Turbo is intended for shared file access; a resource and client-side mount test are needed before claiming successful deployment.
+- Good lab documentation separates the intended exercise from what the captured evidence actually verifies.
 
-## 9. Evidence gaps and possible improvements
+## 8. Publication and evidence notes
 
-To complete the portfolio record, add sanitized evidence showing:
+The original console screenshots included account/agency identifiers, resource identifiers, a public IP address, and Remote VNC session-token URLs. The affected console/VNC images have been removed from this review branch pending redaction. The retained Windows and Linux terminal screenshots are limited to the evidence linked above, but should still receive a final visual review before publication.
 
-### EVS
-- EVS volume details and attachment to the relevant ECS.
-- Windows Disk Management initialization and volume availability, if that part of the exercise was completed.
-- Linux device identification, filesystem creation, mount verification, and successful file read/write.
-- Detach operation and post-detachment verification.
-- Snapshot creation and restore test, if performed.
-
-### OBS
-- Bucket details and successful bucket creation.
-- Upload and download of a non-empty test file, with matching file size or checksum.
-- Deletion confirmation, if performed.
-
-### SFS
-- SFS Turbo status after provisioning completes.
-- Linux NFS client installation and successful mount.
-- Windows NFS client installation and successful mount, if completed.
-- A shared-file test demonstrating access from both clients.
-
-The original storage screenshots are now stored individually in `Screenshots/`. They include console and terminal details that should be checked for public disclosure before the repository is treated as publication-ready. Remove credentials, session tokens, account identifiers, and sensitive IP details before publishing original screenshots.
+No Huawei Cloud resources were changed as part of this repository documentation work.
