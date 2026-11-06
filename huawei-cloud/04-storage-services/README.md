@@ -99,6 +99,23 @@ flowchart TB
     SFS --> STATUS
 ```
 
+## 6.1 Committed screenshot evidence
+
+| Screenshot | Evidence captured |
+|---|---|
+| [Windows Disk Management](Screenshots/01-windows-disk-management.png) | Disk 1 shown Online with a 20 GB NTFS `D:` volume, Healthy (Primary Partition) |
+| [EVS volume inventory](Screenshots/02-evs-volume-inventory.jpg) | EVS volumes including an In-use volume and one shown Detaching |
+| [ECS instance inventory](Screenshots/03-ecs-instance-inventory.jpg) | Three ECS rows displayed as Running |
+| [Linux disk partition table](Screenshots/04-linux-disk-partition-table.png) | `fdisk -l` output showing additional disk `/dev/vdb` |
+| [Linux partition creation](Screenshots/05-linux-partition-creation.png) | Partition `/dev/vdb1` created with Linux type |
+| [Linux ext4 formatting](Screenshots/06-linux-ext4-formatting.png) | `mkfs -t ext4 /dev/vdb1` output |
+| [Linux filesystem mount](Screenshots/07-linux-filesystem-mount.png) | `/dev/vdb1` mounted at `/mnt/sdc`; `df -TH` lists the ext4 filesystem |
+| [Linux file read test](Screenshots/08-linux-file-read-test.png) | A file named `test.file` is read and displays `snapshot test` |
+| [OBS task result](Screenshots/09-obs-task-success-zero-byte-object.jpg) | OBS task succeeded for `obs-test`, but object size is 0 Bytes |
+| [EIP bound to ECS](Screenshots/10-eip-bound-to-ecs.jpg) | Console confirms EIP `119.8.174.201` bound to an ECS successfully |
+| [DNS tools installation](Screenshots/11-linux-dns-tools-install.png) | `bind-utils` package installation completes successfully |
+| [Mount command help](Screenshots/12-linux-mount-command-help.png) | Mount utility help output; not a successful mount test |
+
 ## 7. Verification summary
 
 | Service | What is visible | What is not established |
