@@ -109,6 +109,15 @@ The Public NAT Gateways console shows a gateway named **nat-test** with:
 
 The public IP field is partially visible in the collage and is intentionally omitted. The screenshot confirms the gateway's displayed status and CIDR block, but does not by itself prove that an ECS instance successfully reached the internet through the gateway.
 
+## 5.6 Committed screenshot evidence
+
+| Screenshot | Evidence captured |
+|---|---|
+| [SSH session to private ECS](Screenshots/01-ssh-private-ecs.jpeg) | SSH from `ecs-vpcbasic-01` to `192.168.0.112` reaches the remote login banner |
+| [Private-address ping test](Screenshots/02-private-ip-ping.jpeg) | Six replies from `192.168.1.5`; 0% packet loss in the displayed test |
+| [VPC subnet inventory](Screenshots/03-vpc-subnets.jpeg) | Two subnet rows associated with `vpc-01`; CIDRs are truncated |
+| [Security-group rule cleanup](Screenshots/04-security-group-rule-cleanup.jpeg) | Security-group rule page with a successful deletion notification; not evidence of the final complete rule set |
+
 ## 6. Verification summary
 
 | Area | Evidence visible | What can be stated |
