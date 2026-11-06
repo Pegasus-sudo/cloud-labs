@@ -112,7 +112,7 @@ The supplied collages provide the following visible evidence:
 
 The security-group capture shows inbound **TCP 3306** and **TCP 22** rules. Their source fields visibly begin with `0.0.0.0`, but the right edge of the collage is cropped, so the complete CIDR values cannot be confirmed from this evidence. Two additional rows show **All** traffic associated with security group `sg-hce`, one under IPv4 and one under IPv6.
 
-The screenshots supplied in chat have been reviewed as documentation evidence; they have not been added as image files to this repository. Before publishing original screenshots, remove credentials, account identifiers, and sensitive public IP details.
+The RDS screenshots previously supplied in chat are not currently committed as individual files in this repository. This README therefore remains a text-only lab record until the original evidence images are added and sanitized. Before publishing them, remove credentials, account identifiers, and sensitive public IP details.
 
 ## 6. Security and operational considerations
 
