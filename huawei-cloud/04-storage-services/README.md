@@ -23,7 +23,7 @@ EVS provides persistent block volumes that can be attached to ECS instances and 
 
 ### Linux disk preparation
 
-The retained terminal captures show the following sequence on a Linux ECS:
+The original terminal captures reviewed for this lab showed the following sequence on a Linux ECS. The mount-verification capture is withheld from this public branch because it also exposed session-bearing browser information:
 
 1. `fdisk -l` identifies an additional 21.5 GB block device at `/dev/vdb`.
 2. A primary Linux partition, `/dev/vdb1`, is created with an approximate size of 10 GiB.

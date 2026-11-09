@@ -11,7 +11,7 @@ Hands-on exercises completed as part of Huawei Cloud learning and Solution Archi
 | 01 | [VPC Networking](01-vpc-networking/) | VPC, subnets, SSH/ICMP connectivity, security groups, VPC peering, NAT Gateway | Evidence linked; publication-safety review required |
 | 02 | [Scalable Web Architecture](02-scalable-web-architecture/) | ECS, Apache, WordPress, DAS, Auto Scaling | Evidence linked; ELB/RDS integration incomplete; publication-safety review required |
 | 03 | [Auto Scaling Policies](03-auto-scaling-policies/) | AS groups, alarm-based policies, scaling activity | Evidence linked; one alarm scale-in shown; publication-safety review required |
-| 04 | [Cloud Storage Services](04-storage-services/) | EVS, OBS, SFS Turbo, ECS | Limited EVS evidence retained; console/session-bearing screenshots withheld pending redaction; OBS zero-byte task record; SFS not verified |
+| 04 | [Cloud Storage Services](04-storage-services/) | EVS, OBS, SFS Turbo, ECS | EVS evidence retained; OBS console image withheld pending redaction; SFS not verified |
 | 05 | [RDS for MySQL Management and Connectivity](05-rds-mysql-management-connectivity/) | RDS for MySQL, database port, DAS, connectivity | Documentation updated; screenshots withheld pending redaction |
 
 ## Training context
