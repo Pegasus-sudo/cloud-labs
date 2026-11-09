@@ -5,7 +5,7 @@
 **Platform:** Huawei Cloud  
 **Training:** HCCDP Solution Architecture  
 **Region shown in original console captures:** AP-Singapore  
-**Evidence status:** EVS Linux/Windows evidence retained; OBS evidence withheld pending redaction; SFS remains unverified.
+**Evidence status:** Limited EVS evidence retained; console and session-bearing captures withheld pending redaction; SFS remains unverified.
 
 ## 1. Objectives
 
@@ -53,8 +53,6 @@ The screenshot shows the resulting disk/volume state; it does not show the compl
 | [Linux disk partition table](Screenshots/04-linux-disk-partition-table.png) | An additional `/dev/vdb` disk is visible | Does not alone prove cloud attachment details |
 | [Linux partition creation](Screenshots/05-linux-partition-creation.png) | A Linux partition `/dev/vdb1` is created | Partitioning only |
 | [Linux ext4 formatting](Screenshots/06-linux-ext4-formatting.png) | `/dev/vdb1` is formatted as ext4 | Does not prove persistence after reboot |
-| [Linux filesystem mount](Screenshots/07-linux-filesystem-mount.png) | `/dev/vdb1` is mounted at `/mnt/sdc`; `df -TH` lists it | No reboot/persistent-mount test is shown |
-| [Linux file-read attempt](Screenshots/08-linux-file-read-test.png) | A separate mount command for `/dev/vdc1` succeeds; a file is read from the current directory | The file read is not demonstrated from the mounted path |
 
 ## 3. OBS — Object Storage Service
 
@@ -111,6 +109,6 @@ flowchart TB
 
 ## 8. Publication and evidence notes
 
-The original console screenshots included account/agency identifiers, resource identifiers, a public IP address, and Remote VNC session-token URLs. The affected console/VNC images have been removed from this review branch pending redaction. The retained Windows and Linux terminal screenshots are limited to the evidence linked above, but should still receive a final visual review before publication.
+The original screenshots included account/agency identifiers, resource identifiers, a public IP address, and Remote VNC session-token URLs. Console captures, the EIP-binding capture, and the two terminal captures containing session-bearing browser URLs are withheld from this review branch pending redaction. The remaining Windows and Linux terminal screenshots are limited to the evidence linked above, but should still receive a final visual review before publication.
 
 No Huawei Cloud resources were changed as part of this repository documentation work.
