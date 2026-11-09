@@ -76,7 +76,7 @@ My background includes a completed networking internship with the IUB Directorat
 ## Responsible lab practices
 
 - No cloud credentials, private keys, access tokens, or account secrets belong in this repository.
-- Account identifiers, public IP addresses, and other sensitive console details should be removed from screenshots before publishing.
+- Credentials, active session tokens, and reusable authentication URLs must never be published. Review sandbox account/resource identifiers and temporary public IP addresses in context rather than automatically treating them as credentials.
 - Cloud resources should be reviewed and released after exercises to avoid unintended charges.
 - Service behavior and available features may vary by region, account permissions, and training environment.
 
