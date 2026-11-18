@@ -6,7 +6,7 @@
 **Primary services:** Cloud Eye, Log Tank Service (LTS), Simple Message Notification (SMN), ICAgent  
 **Supporting services:** VPC, security groups, RDS  
 **Exercise type:** Guided hands-on training lab  
-**Status:** Lab completed; public evidence screenshots have not yet been added
+**Status:** Lab completed; 12 implementation screenshots included
 
 ## 1. Objective
 
@@ -103,16 +103,15 @@ These components provided an application environment for the monitoring and log-
 
 ## 5. Verification and evidence status
 
-The lab is recorded as completed based on the exercise activities supplied for this entry. No screenshots, exported configurations, alarm payloads, or delivery receipts were supplied with this GitHub update; therefore, individual console states and end-to-end outcomes are not independently evidenced in this repository yet.
+The lab is recorded as completed based on the guided exercise activities. The repository includes screenshots for the supporting network and application environment, RDS provisioning, Cloud Eye resource metrics, an ECS restart event, and an enabled event-based alarm rule. The screenshots do not independently evidence the LTS, ICAgent, or SMN configuration steps, nor do they prove end-to-end notification delivery.
 
 | Area | Activity covered | Public evidence in this repository |
 |---|---|---|
-| Supporting environment | Subnet, security group, RDS, and Discuz! database integration | Not yet attached |
-| Cloud Eye | Resource metric and event monitoring | Not yet attached |
-| SMN | Topic configuration and alarm notification workflow | Not yet attached |
-| LTS | Log groups and log streams | Not yet attached |
-| ICAgent | Host agent installation and log ingestion | Not yet attached |
-| Log analysis | Log visualization and analysis | Not yet attached |
+| Supporting environment | Subnets and security groups | [01 – VPC subnets](Screenshots/01-vpc-subnets.png), [02 – Security groups](Screenshots/02-security-groups.png) |
+| RDS and application | RDS instance and Discuz! database/application setup | [03 – RDS instance](Screenshots/03-rds-instance.png), [04 – Discuz! installation check](Screenshots/04-discuz-installation-check.png), [05 – Database installation](Screenshots/05-discuz-database-installation.png), [06 – Forum running](Screenshots/06-discuz-forum-running.png) |
+| Cloud Eye | Resource metrics | [07](Screenshots/07-cloud-eye-resource-metrics-01.png), [08](Screenshots/08-cloud-eye-resource-metrics-02.png), [09 – Request metrics](Screenshots/09-cloud-eye-request-metrics.png) |
+| Cloud Eye events and alarms | ECS restart event, event visualization, and enabled alarm rule | [10 – ECS restart event](Screenshots/10-cloud-eye-ecs-restart-event.png), [11 – Event visualization](Screenshots/11-cloud-eye-event-visualization.png), [12 – Alarm rule](Screenshots/12-cloud-eye-alarm-rule.png) |
+| LTS, ICAgent, and SMN | Activities covered in the guided lab | No screenshots retained; not independently evidenced in this repository |
 
 When adding screenshots, redact account identifiers, usernames, internal IP addresses where sensitive, public IPs, database endpoints, credentials, tokens, and any other account-specific information.
 
@@ -144,7 +143,7 @@ This exercise provided hands-on exposure to:
 
 - This was a guided training lab, not a production rollout.
 - No specific metric thresholds, retention periods, log volume, or alert-delivery latency are claimed.
-- The repository does not yet contain sanitized screenshots or exported configuration evidence.
+- The repository contains 12 screenshots of selected implementation steps; LTS, ICAgent, and SMN evidence was not retained.
 - No automated remediation, incident-management integration, or high-availability monitoring design is claimed.
 
 ## 9. Cleanup and cost awareness
