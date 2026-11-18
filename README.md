@@ -1,15 +1,15 @@
 # Cloud Infrastructure Labs
 
-A technical portfolio of hands-on cloud and container-infrastructure exercises across **AWS**, **Huawei Cloud**, and **Docker**, with an emphasis on infrastructure design, cloud networking, application deployment, operations, and security fundamentals.
+A technical portfolio of hands-on cloud and container-infrastructure projects across **AWS**, **Huawei Cloud**, and **Docker**, with an emphasis on infrastructure design, cloud networking, application deployment, operations, observability, and security fundamentals.
 
-The repository documents practical work completed through guided training and local lab environments. Each entry aims to explain the architecture, configuration decisions, verification steps, and lessons learned—not just list the services used.
+The repository documents practical work completed through guided training and local lab environments. Each entry explains the architecture, configuration activities, verification approach, and lessons learned—not just a list of services.
 
 ## Portfolio at a glance
 
 | Platform | Focus areas |
 |---|---|
 | AWS | VPC networking, EC2 operations, IAM, serverless automation, managed application deployment |
-| Huawei Cloud | VPC networking, load balancing, auto scaling, storage, and managed databases |
+| Huawei Cloud | VPC networking, load balancing, auto scaling, storage, managed databases, monitoring, and log management |
 | Containers | Docker, Docker Compose, microservices, Nginx API Gateway, service discovery, and API rate limiting |
 
 ## AWS labs
@@ -30,6 +30,7 @@ The repository documents practical work completed through guided training and lo
 | 03 | Auto Scaling policies | AS configuration and groups, alarm-based and scheduled policies, ELB | [Open lab](huawei-cloud/03-auto-scaling-policies/) |
 | 04 | Cloud storage services | EVS, OBS, SFS Turbo, ECS | [Open lab](huawei-cloud/04-storage-services/) |
 | 05 | RDS for MySQL management and connectivity | RDS for MySQL, automated backups, database ports, DAS, private and public connectivity | [Open lab](huawei-cloud/05-rds-mysql-management-connectivity/) |
+| 06 | O&M monitoring and log management | Cloud Eye, LTS, ICAgent, SMN, resource monitoring, host-log ingestion, alarm notifications | [Open project](huawei-cloud/06-om-monitoring-and-log-management/) |
 
 ## Container and DevOps labs
 
@@ -39,7 +40,7 @@ The repository documents practical work completed through guided training and lo
 
 ## How the labs are documented
 
-Where the available evidence supports it, lab documentation covers:
+Where the available evidence supports it, project documentation covers:
 
 - **Objective and scope** — the task being performed and the skills practiced.
 - **Architecture** — the cloud or container components and how traffic or data moves between them.
@@ -48,7 +49,7 @@ Where the available evidence supports it, lab documentation covers:
 - **Security and operations** — access control, exposure, availability, backup, monitoring, and cleanup considerations.
 - **Evidence** — console screenshots or sanitized command output, where available.
 
-Some exercises were completed in guided training environments, including AWS Academy and Huawei Cloud training. They are identified as learning labs and should not be interpreted as production deployments.
+Some exercises were completed in guided training environments, including AWS Academy and Huawei Cloud training. They are identified as learning projects and should not be interpreted as production deployments.
 
 ## Repository structure
 
@@ -68,7 +69,8 @@ cloud-labs/
 │   ├── 02-scalable-web-architecture/
 │   ├── 03-auto-scaling-policies/
 │   ├── 04-storage-services/
-│   └── 05-rds-mysql-management-connectivity/
+│   ├── 05-rds-mysql-management-connectivity/
+│   └── 06-om-monitoring-and-log-management/
 └── containers/
     └── 01-docker-microservices-api-gateway/
         ├── README.md
