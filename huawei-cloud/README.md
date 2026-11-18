@@ -13,6 +13,7 @@ Hands-on exercises completed as part of Huawei Cloud learning and Solution Archi
 | 03 | [Auto Scaling Policies](03-auto-scaling-policies/) | AS groups, alarm-based policies, scaling activity | Evidence linked; one alarm scale-in shown |
 | 04 | [Cloud Storage Services](04-storage-services/) | EVS, OBS, SFS Turbo, ECS | EVS operations and limited OBS task evidence linked; SFS not verified |
 | 05 | [RDS for MySQL Management and Connectivity](05-rds-mysql-management-connectivity/) | RDS for MySQL, database port, DAS, connectivity | Documentation updated; screenshots withheld pending review |
+| 06 | [O&M Monitoring and Log Management](06-om-monitoring-and-log-management/) | Cloud Eye, LTS, ICAgent, SMN, resource monitoring, log ingestion, alarm notifications | Lab documented; sanitized evidence pending |
 
 ## Training context
 
