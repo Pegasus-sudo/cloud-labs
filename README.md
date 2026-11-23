@@ -31,6 +31,7 @@ The repository documents practical work completed through guided training and lo
 | 04 | Cloud storage services | EVS, OBS, SFS Turbo, ECS | [Open lab](huawei-cloud/04-storage-services/) |
 | 05 | RDS for MySQL management and connectivity | RDS for MySQL, automated backups, database ports, DAS, private and public connectivity | [Open lab](huawei-cloud/05-rds-mysql-management-connectivity/) |
 | 06 | O&M monitoring and log management | Cloud Eye, LTS, ICAgent, SMN, resource monitoring, host-log ingestion, alarm notifications | [Open project](huawei-cloud/06-om-monitoring-and-log-management/) |
+| 07 | Highly reliable database solution | RDS primary/standby, DRS full and incremental synchronization, read replicas, DCS caching | [Open lab](huawei-cloud/07-highly-reliable-database-solution/) |
 
 ## Container and DevOps labs
 
@@ -70,7 +71,8 @@ cloud-labs/
 │   ├── 03-auto-scaling-policies/
 │   ├── 04-storage-services/
 │   ├── 05-rds-mysql-management-connectivity/
-│   └── 06-om-monitoring-and-log-management/
+│   ├── 06-om-monitoring-and-log-management/
+│   └── 07-highly-reliable-database-solution/
 └── containers/
     └── 01-docker-microservices-api-gateway/
         ├── README.md
@@ -90,15 +92,3 @@ My background includes a completed networking internship with the IUB Directorat
 
 - **LinkedIn:** [Chaudhary M Hussnain](https://www.linkedin.com/in/chaudhary-m-hussnain-bbb7a7269/)
 - **GitHub:** [Pegasus-sudo](https://github.com/Pegasus-sudo)
-
-## Responsible lab practices
-
-- No cloud credentials, private keys, access tokens, or account secrets belong in this repository.
-- Credentials, active session tokens, and reusable authentication URLs must never be published. Review sandbox account/resource identifiers and temporary public IP addresses in context rather than automatically treating them as credentials.
-- Cloud resources should be reviewed and released after exercises to avoid unintended charges.
-- Local development services should not be exposed directly to the public internet without appropriate authentication, TLS, network restrictions, and monitoring.
-- Service behavior and available features may vary by region, account permissions, and training environment.
-
----
-
-*Learn. Build. Document. Improve.*
